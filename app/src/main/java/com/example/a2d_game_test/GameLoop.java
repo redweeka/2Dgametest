@@ -61,9 +61,6 @@ public class GameLoop extends Thread {
                     updatesCount++;
                     this.game.draw(canvas);
                 }
-
-                this.surfaceHolder.unlockCanvasAndPost(canvas);
-                framesPerSecondCount++;
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             } finally {
@@ -72,7 +69,7 @@ public class GameLoop extends Thread {
                         this.surfaceHolder.unlockCanvasAndPost(canvas);
                         framesPerSecondCount++;
                     }
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
             }
