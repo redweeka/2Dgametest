@@ -14,6 +14,11 @@ import com.example.a2d_game_test.R;
 import com.example.a2d_game_test.models.Player;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
+    private static final int START_PLAYER_POSITION_Y = 466;
+    private static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
+    private static final int PLAYER_RADIUS = 36;
+    private static final float TEXT_SIZE = 66;
+
     private final GameLoop gameLoop;
     private final Player player;
 
@@ -25,7 +30,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.gameLoop = new GameLoop(this, surfaceHolder);
 
         // Initialize player
-        this.player = new Player(getContext(), 2*500, 500, 30);
+        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS);
 
         // Everybody do it
         setFocusable(true);
@@ -78,8 +83,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint paint = new Paint();
         paint.setColor(color);
-        paint.setTextSize(66);
+        paint.setTextSize(TEXT_SIZE);
 
+        // Random numbers
         canvas.drawText("UpdatesPerSecond: " + averageUpdatesPerSecond, 166, 366, paint);
     }
 
@@ -90,8 +96,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint paint = new Paint();
         paint.setColor(color);
-        paint.setTextSize(66);
+        paint.setTextSize(TEXT_SIZE);
 
+        // Random numbers
         canvas.drawText("FramesPerSecond: " + averageFramesPerSecond, 266, 666, paint);
     }
 

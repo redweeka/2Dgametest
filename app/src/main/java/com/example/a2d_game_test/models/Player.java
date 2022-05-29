@@ -11,8 +11,8 @@ import com.example.a2d_game_test.R;
 public class Player {
     private double playerPositionX;
     private double playerPositionY;
-    private double playerRadius;
-    private Paint playerPaint;
+    private final double playerRadius;
+    private final Paint playerPaint;
 
     public Player(Context context, double playerPositionX, double playerPositionY, double playerRadius){
         this.playerPositionX = playerPositionX;
