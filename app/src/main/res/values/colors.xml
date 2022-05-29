@@ -7,6 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- My special colors   -->
     <color name="silver">#66666666</color>
     <color name="red">#F64242</color>
+
+    <!-- Game related colors   -->
+    <color name="player">#F64242</color>
 </resources>

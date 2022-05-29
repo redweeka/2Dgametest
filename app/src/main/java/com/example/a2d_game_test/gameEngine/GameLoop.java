@@ -1,4 +1,4 @@
-package com.example.a2d_game_test;
+package com.example.a2d_game_test.gameEngine;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -11,8 +11,8 @@ public class GameLoop extends Thread {
     private static final double MAX_UPDATES_PER_SECOND = 30.0;
     private static final double UPDATES_PER_SECOND_PERIOD = 1E+3 / MAX_UPDATES_PER_SECOND;
 
-    private Game game;
-    private SurfaceHolder surfaceHolder;
+    private final Game game;
+    private final SurfaceHolder surfaceHolder;
     private boolean isRunning = false;
     private double averageUpdatesPerSecond = 0;
     private double averageFramesPerSecond = 0;
