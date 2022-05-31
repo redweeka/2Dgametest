@@ -13,5 +13,7 @@
     <color name="red">#F64242</color>
 
     <!-- Game related colors   -->
-    <color name="player">#F64242</color>
+    <color name="player">#F64646</color>
+    <color name="outer_joystick">#859F9F85</color>
+    <color name="inner_joystick">#252252</color>
 </resources>

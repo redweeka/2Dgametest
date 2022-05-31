@@ -1,5 +1,9 @@
 package com.example.a2d_game_test.gameEngine;
 
+import static com.example.a2d_game_test.utilities.Constants.MAX_UPDATES_PER_SECOND;
+import static com.example.a2d_game_test.utilities.Constants.SECOND_IN_MILLISECOND;
+import static com.example.a2d_game_test.utilities.Constants.UPDATES_PER_SECOND_PERIOD;
+
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -7,9 +11,6 @@ import android.view.SurfaceHolder;
 public class GameLoop extends Thread {
 
     private static final String TAG = "GameLoop";
-    private static final int SECOND_IN_MILLISECOND = 1000;
-    private static final double MAX_UPDATES_PER_SECOND = 30.0;
-    private static final double UPDATES_PER_SECOND_PERIOD = 1E+3 / MAX_UPDATES_PER_SECOND;
 
     private final Game game;
     private final SurfaceHolder surfaceHolder;

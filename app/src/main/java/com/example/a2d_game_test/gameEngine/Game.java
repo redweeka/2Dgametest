@@ -1,5 +1,14 @@
 package com.example.a2d_game_test.gameEngine;
 
+import static com.example.a2d_game_test.utilities.Constants.INNER_JOYSTICK_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.OUTER_JOYSTICK_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.PLAYER_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.START_PLAYER_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.START_PLAYER_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.TEXT_SIZE;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,15 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
+import com.example.a2d_game_test.models.Joystick;
 import com.example.a2d_game_test.models.Player;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
-    private static final int START_PLAYER_POSITION_Y = 466;
-    private static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
-    private static final int PLAYER_RADIUS = 36;
-    private static final float TEXT_SIZE = 66;
-
     private final GameLoop gameLoop;
+    private final Joystick joystick;
     private final Player player;
 
     public Game(Context context) {
@@ -29,10 +35,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         this.gameLoop = new GameLoop(this, surfaceHolder);
 
-        // Initialize player
+        // Initialize Game objects
+        this.joystick = new Joystick(getContext(), START_JOYSTICK_POSITION_X, START_JOYSTICK_POSITION_Y, OUTER_JOYSTICK_RADIUS, INNER_JOYSTICK_RADIUS);
         this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS);
 
-        // Everybody do it
+        // Everybody doing it
         setFocusable(true);
     }
 
@@ -40,8 +47,20 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
+                if(this.joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                    this.joystick.setIsPressed(true);
+                }
+
+                return true;
             case MotionEvent.ACTION_MOVE:
-                player.setPosition((double) event.getX(), (double) event.getY());
+                if(this.joystick.isPressed()) {
+                    this.joystick.setActuator((double) event.getX(), (double) event.getY());
+                }
+
+                return true;
+            case MotionEvent.ACTION_UP:
+                this.joystick.setIsPressed(false);
+                this.joystick.resetActuator();
 
                 return true;
             default:
@@ -73,6 +92,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawUpdatesPerSecond(canvas);
         drawFramesPerSecond(canvas);
 
+        this.joystick.draw(canvas);
         this.player.draw(canvas);
     }
 
@@ -86,7 +106,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(TEXT_SIZE);
 
         // Random numbers
-        canvas.drawText("UpdatesPerSecond: " + averageUpdatesPerSecond, 166, 366, paint);
+        canvas.drawText("UpdatesPerSecond: " + averageUpdatesPerSecond, 156, 246, paint);
     }
 
     public void drawFramesPerSecond(Canvas canvas){
@@ -99,11 +119,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(TEXT_SIZE);
 
         // Random numbers
-        canvas.drawText("FramesPerSecond: " + averageFramesPerSecond, 266, 666, paint);
+        canvas.drawText("FramesPerSecond: " + averageFramesPerSecond, 156, 426, paint);
     }
 
     public void update() {
         // Update game state
-        player.update();
+        this.joystick.update();
+        this.player.update(this.joystick);
     }
 }
