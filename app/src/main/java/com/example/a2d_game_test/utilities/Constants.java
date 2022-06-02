@@ -13,7 +13,8 @@ public class Constants {
     public static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
     public static final int PLAYER_RADIUS = 36;
 
-    public static final double PLAYER_PIXELS_PER_SECOND_SPEED = 466.6;
+    // Movement
+    public static final double PLAYER_PIXELS_PER_SECOND_SPEED = 566.6;
     public static final double PLAYER_MAX_SPEED = PLAYER_PIXELS_PER_SECOND_SPEED / MAX_UPDATES_PER_SECOND;
 
     // Joystick

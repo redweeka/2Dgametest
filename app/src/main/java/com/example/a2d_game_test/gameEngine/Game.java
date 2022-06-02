@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
+import com.example.a2d_game_test.models.Enemy;
 import com.example.a2d_game_test.models.Joystick;
 import com.example.a2d_game_test.models.Player;
 
@@ -27,6 +28,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final GameLoop gameLoop;
     private final Joystick joystick;
     private final Player player;
+    private final Enemy enemy;
 
     public Game(Context context) {
         super(context);
@@ -37,7 +39,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Initialize Game objects
         this.joystick = new Joystick(getContext(), START_JOYSTICK_POSITION_X, START_JOYSTICK_POSITION_Y, OUTER_JOYSTICK_RADIUS, INNER_JOYSTICK_RADIUS);
-        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS);
+        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS, joystick);
+        this.enemy = new Enemy();
 
         // Everybody doing it
         setFocusable(true);
@@ -125,6 +128,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         // Update game state
         this.joystick.update();
-        this.player.update(this.joystick);
+        this.player.update();
     }
 }
