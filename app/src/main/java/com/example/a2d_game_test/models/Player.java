@@ -19,11 +19,6 @@ public class Player extends CircleGameObject {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-    }
-
-    @Override
     public void update() {
         updatePlayerVelocity();
         updatePlayerPosition();

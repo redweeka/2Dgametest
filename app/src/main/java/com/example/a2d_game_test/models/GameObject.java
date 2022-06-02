@@ -2,6 +2,8 @@ package com.example.a2d_game_test.models;
 
 import android.graphics.Canvas;
 
+import com.example.a2d_game_test.utilities.Utils;
+
 public abstract class GameObject {
     protected double positionX;
     protected double positionY;
@@ -16,4 +18,19 @@ public abstract class GameObject {
     public abstract void draw(Canvas canvas);
 
     public abstract void update();
+
+    protected double distanceBetweenObjects(GameObject object1, GameObject object2) {
+        return Utils.calculateDistanceBetween2Points(
+                object1.positionX - object2.positionX,
+                object1.positionY - object2.positionY
+        );
+    }
+
+    protected double positionX() {
+        return this.positionX;
+    }
+
+    protected double positionY() {
+        return this.positionY;
+    }
 }

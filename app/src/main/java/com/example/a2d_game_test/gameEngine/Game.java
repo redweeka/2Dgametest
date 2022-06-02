@@ -1,8 +1,11 @@
 package com.example.a2d_game_test.gameEngine;
 
+import static com.example.a2d_game_test.utilities.Constants.ENEMY_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.INNER_JOYSTICK_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.OUTER_JOYSTICK_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.PLAYER_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.START_ENEMY_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.START_ENEMY_POSITION_Y;
 import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_Y;
 import static com.example.a2d_game_test.utilities.Constants.START_PLAYER_POSITION_X;
@@ -39,8 +42,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Initialize Game objects
         this.joystick = new Joystick(getContext(), START_JOYSTICK_POSITION_X, START_JOYSTICK_POSITION_Y, OUTER_JOYSTICK_RADIUS, INNER_JOYSTICK_RADIUS);
-        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS, joystick);
-        this.enemy = new Enemy();
+        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS, this.joystick);
+        this.enemy = new Enemy(getContext(), START_ENEMY_POSITION_X, START_ENEMY_POSITION_Y, ENEMY_RADIUS, this.player);
 
         // Everybody doing it
         setFocusable(true);
@@ -97,6 +100,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         this.joystick.draw(canvas);
         this.player.draw(canvas);
+        this.enemy.draw(canvas);
     }
 
     public void drawUpdatesPerSecond(Canvas canvas){
@@ -129,5 +133,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // Update game state
         this.joystick.update();
         this.player.update();
+        this.enemy.update();
     }
 }
