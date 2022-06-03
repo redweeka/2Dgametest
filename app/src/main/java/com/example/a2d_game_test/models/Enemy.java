@@ -1,10 +1,10 @@
 package com.example.a2d_game_test.models;
 
-import static com.example.a2d_game_test.utilities.Constants.ENEMY_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPAWN_MAX_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPAWN_MAX_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPEED;
-import static com.example.a2d_game_test.utilities.Constants.UPDATES_PER_SPAWN;
+import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.Enemy.UPDATES_PER_SPAWN;
+import static com.example.a2d_game_test.utilities.Constants.Movement.ENEMY_SPEED;
 
 import android.content.Context;
 
