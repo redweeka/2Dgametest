@@ -3,7 +3,6 @@ package com.example.a2d_game_test.models;
 import static com.example.a2d_game_test.utilities.Constants.PLAYER_MAX_SPEED;
 
 import android.content.Context;
-import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
