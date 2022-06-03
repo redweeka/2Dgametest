@@ -18,12 +18,6 @@ public class Enemy extends CircleGameObject {
     private static double updatesUntilNextRespawn = UPDATES_PER_SPAWN;
     private final Player player;
 
-    public Enemy(Context context, double positionX, double positionY, double radius, Player player) {
-        super(positionX, positionY, radius, ContextCompat.getColor(context, R.color.enemy));
-
-        this.player = player;
-    }
-
     public Enemy(Context context, Player player) {
         super(Math.random() * ENEMY_SPAWN_MAX_POSITION_X, Math.random() * ENEMY_SPAWN_MAX_POSITION_Y, ENEMY_RADIUS, ContextCompat.getColor(context, R.color.enemy));
 

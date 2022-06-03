@@ -20,14 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
-import com.example.a2d_game_test.events.MotionEventEnum;
-import com.example.a2d_game_test.events.MotionEventEnumFactory;
+import com.example.a2d_game_test.models.Bullet;
 import com.example.a2d_game_test.models.CircleGameObject;
 import com.example.a2d_game_test.models.Enemy;
 import com.example.a2d_game_test.models.Joystick;
 import com.example.a2d_game_test.models.Player;
 
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +35,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Joystick joystick;
     private final Player player;
     private List<Enemy> enemies = new ArrayList<>();
+    private List<Bullet> bullets = new ArrayList<>();
 
     public Game(Context context) {
         super(context);
@@ -54,16 +53,40 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * moving player by action event
-     *
-     * the function get the selected action and moving the player on monitor
-     * see MotionEventEnum
+     * Moving player by action event:
+     * The function get the motion event and rendering the objects on the screen accordingly
+     * See MotionEventEnum
      */
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Optional<MotionEventEnum> optionalMotionEventEnum = MotionEventEnumFactory.crateEventEnum(event.getAction());
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            // User touched the screen
+            case MotionEvent.ACTION_DOWN:
+                // If only joystick pressed -> indicate that the joystick moving
+                // Else -> shoot bullet
+                if (this.joystick.isPressed(motionEvent.getX(), motionEvent.getY())) {
+                    this.joystick.setIsPressed(true);
+                } else {
+                    this.bullets.add(new Bullet(getContext(), this.player));
+                }
 
-        return optionalMotionEventEnum.map(motionEventEnum -> motionEventEnum.onTouchEvent(this.joystick, event)).orElseGet(() -> super.onTouchEvent(event));
+                return true;
+            // User move the finger on the screen
+            case MotionEvent.ACTION_MOVE:
+                if (this.joystick.isPressed()) {
+                    this.joystick.setActuator(motionEvent.getX(), motionEvent.getY());
+                }
+
+                return true;
+            // User untouched the screen
+            case MotionEvent.ACTION_UP:
+                this.joystick.setIsPressed(false);
+                this.joystick.resetActuator();
+
+                return true;
+            default:
+                return super.onTouchEvent(motionEvent);
+        }
     }
 
     @Override
@@ -73,12 +96,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-
     }
 
     @Override
@@ -126,7 +147,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.player.update();
 
         // Spawn enemy when the time is right
-        if(Enemy.readyToSpawn()) {
+        if (Enemy.readyToSpawn()) {
             Enemy newEnemy = new Enemy(getContext(), this.player);
             this.enemies.add(newEnemy);
         }
