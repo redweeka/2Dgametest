@@ -54,12 +54,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * moving point by action event
+     * moving player by action event
      *
-     * the function get the selected action and moving the pont on monitor
+     * the function get the selected action and moving the player on monitor
      * see MotionEventEnum
-     * @param event
-     * @return
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
