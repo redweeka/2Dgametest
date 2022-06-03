@@ -23,9 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
+import com.example.a2d_game_test.events.MotionEventEnum;
+import com.example.a2d_game_test.events.MotionEventEnumFactory;
 import com.example.a2d_game_test.models.Enemy;
 import com.example.a2d_game_test.models.Joystick;
 import com.example.a2d_game_test.models.Player;
+
+import java.util.Optional;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final GameLoop gameLoop;
@@ -49,31 +53,19 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
     }
 
+    /**
+     * moving point by action event
+     *
+     * the function get the selected action and moving the pont on monitor
+     * see MotionEventEnum
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                if(this.joystick.isPressed((double) event.getX(), (double) event.getY())) {
-                    this.joystick.setIsPressed(true);
-                }
+        Optional<MotionEventEnum> optionalMotionEventEnum = MotionEventEnumFactory.crateEventEnum(event.getAction());
 
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                if(this.joystick.isPressed()) {
-                    this.joystick.setActuator((double) event.getX(), (double) event.getY());
-                }
-
-                return true;
-            case MotionEvent.ACTION_UP:
-                this.joystick.setIsPressed(false);
-                this.joystick.resetActuator();
-
-                return true;
-            default:
-                break;
-        }
-
-        return super.onTouchEvent(event);
+        return optionalMotionEventEnum.map(motionEventEnum -> motionEventEnum.onTouchEvent(this.joystick, event)).orElseGet(() -> super.onTouchEvent(event));
     }
 
     @Override
@@ -103,7 +95,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.enemy.draw(canvas);
     }
 
-    public void drawUpdatesPerSecond(Canvas canvas){
+    public void drawUpdatesPerSecond(Canvas canvas) {
         String averageUpdatesPerSecond = Double.toString(this.gameLoop.getAverageUpdatesPerSecond());
 
         int color = ContextCompat.getColor(getContext(), R.color.silver);
@@ -116,7 +108,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("UpdatesPerSecond: " + averageUpdatesPerSecond, 156, 246, paint);
     }
 
-    public void drawFramesPerSecond(Canvas canvas){
+    public void drawFramesPerSecond(Canvas canvas) {
         String averageFramesPerSecond = Double.toString(this.gameLoop.getAverageFramesPerSecond());
 
         int color = ContextCompat.getColor(getContext(), R.color.red);
