@@ -16,6 +16,21 @@ public abstract class CircleGameObject extends GameObject {
         this.paint.setColor(paintColor);
     }
 
+    /*
+     *   Get distance between center of the circleGameObjects
+     *   Get both of the circleGameObjects radii
+     *
+     *   if the distance between circleGameObjects centers is fewer then both of the radii
+     *       circleGameObjects are colliding -> return true
+     *   else -> return false
+     * */
+    public static boolean isColliding(CircleGameObject object1, CircleGameObject object2) {
+        double distance = distanceBetweenObjects(object1, object2);
+        double distanceToCollision = object1.radius + object2.radius;
+
+        return distance < distanceToCollision;
+    }
+
     @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle((float) this.positionX, (float) this.positionY, (float) this.radius, this.paint);
