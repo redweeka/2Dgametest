@@ -14,8 +14,11 @@ public class Constants {
     public static final int PLAYER_RADIUS = 36;
 
     // Enemy
-    public static final int START_ENEMY_POSITION_X = 256;
-    public static final int START_ENEMY_POSITION_Y = START_ENEMY_POSITION_X * 2;
+    public static final double ENEMIES_SPAWNS_PER_MINUTE = 20.0;
+    public static final double ENEMIES_SPAWNS_PER_SECOND = ENEMIES_SPAWNS_PER_MINUTE/60.0;
+    public static final double UPDATES_PER_SPAWN = MAX_UPDATES_PER_SECOND/ENEMIES_SPAWNS_PER_SECOND;
+    public static final int ENEMY_SPAWN_MAX_POSITION_X = 1666;
+    public static final int ENEMY_SPAWN_MAX_POSITION_Y = 866;
     public static final int ENEMY_RADIUS = 36;
 
     // Movement
