@@ -44,4 +44,9 @@ public class Constants {
         public static final String TEXT_BORDER = ":";
         public static final float TEXT_HEIGHT = TEXT_SIZE;
     }
+
+    public static class Bullet {
+        public static final int BULLET_RADIUS = 26;
+        public static final double BULLET_SPEED = Movement.PLAYER_MAX_SPEED;
+    }
 }

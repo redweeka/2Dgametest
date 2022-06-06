@@ -76,7 +76,7 @@ public class Joystick {
         this.innerJoystickCirclePositionY = (int) (this.outerJoystickCirclePositionY + this.actuatorY*outerJoystickRadius);
     }
 
-    public boolean isPressed(double touchPositionX, double touchPositionY) {
+    public boolean isLocation(double touchPositionX, double touchPositionY) {
         this.joystickCenterToTouchDistance = Utils.calculateDistanceBetween2Points(
                 this.outerJoystickCirclePositionX - touchPositionX,
                 this.outerJoystickCirclePositionY - touchPositionY
