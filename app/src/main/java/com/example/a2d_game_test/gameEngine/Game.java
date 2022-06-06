@@ -3,7 +3,7 @@ package com.example.a2d_game_test.gameEngine;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.FRAME_PER_SECOND;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.MAX_TEXT_LENGTH;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_BORDER;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_HEIGHT;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_POSITION_Y;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.UPDATES_PER_SECOND;
 import static com.example.a2d_game_test.utilities.Constants.Joystick.INNER_JOYSTICK_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.Joystick.OUTER_JOYSTICK_RADIUS;
@@ -157,7 +157,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        canvas.drawText(textToDraw, 0, TEXT_HEIGHT, paint);
+        canvas.drawText(textToDraw, 0, TEXT_POSITION_Y, paint);
     }
 
     public void drawFramesPerSecond(Canvas canvas) {
@@ -170,7 +170,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        canvas.drawText(textToDraw, 0, (TEXT_HEIGHT * 2), paint);
+        canvas.drawText(textToDraw, 0, (TEXT_POSITION_Y * 2), paint);
     }
 
     /**

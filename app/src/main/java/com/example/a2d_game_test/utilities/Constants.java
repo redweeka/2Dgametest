@@ -42,7 +42,7 @@ public class Constants {
         public static final String FRAME_PER_SECOND = "FramesPerSecond";
         public static final int MAX_TEXT_LENGTH = UPDATES_PER_SECOND.length() + 1;
         public static final String TEXT_BORDER = ":";
-        public static final float TEXT_HEIGHT = TEXT_SIZE;
+        public static final float TEXT_POSITION_Y = TEXT_SIZE;
     }
 
     public static class Bullet {
