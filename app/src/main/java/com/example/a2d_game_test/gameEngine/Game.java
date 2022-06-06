@@ -1,8 +1,9 @@
 package com.example.a2d_game_test.gameEngine;
 
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.FRAME_PER_SECOND;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.MAX_TEXT_SIZE;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.MAX_TEXT_LENGTH;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_BORDER;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_HEIGHT;
 import static com.example.a2d_game_test.utilities.Constants.GameDetails.UPDATES_PER_SECOND;
 import static com.example.a2d_game_test.utilities.Constants.Joystick.INNER_JOYSTICK_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.Joystick.OUTER_JOYSTICK_RADIUS;
@@ -107,7 +108,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        canvas.drawText(textToDraw, 0, TEXT_SIZE, paint);
+        canvas.drawText(textToDraw, 0, TEXT_HEIGHT, paint);
     }
 
     public void drawFramesPerSecond(Canvas canvas) {
@@ -120,11 +121,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        canvas.drawText(textToDraw, 0, (TEXT_SIZE * 2), paint);
+        canvas.drawText(textToDraw, 0, (TEXT_HEIGHT * 2), paint);
     }
 
+    /**
+     * @return: "<TEXT> : <DOUBLE_NUMBER>"
+     */
     private String getTextFormattedTODraw(String textKey, double valve) {
-        return String.format("%" + -MAX_TEXT_SIZE + "s" + TEXT_BORDER + " %f", textKey, valve);
+        return String.format("%" + -MAX_TEXT_LENGTH + "s" + TEXT_BORDER + " %f", textKey, valve);
     }
 
     // Responsible for game update and everything that happen when it does
