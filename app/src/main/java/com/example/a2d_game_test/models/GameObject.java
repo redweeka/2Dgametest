@@ -1,6 +1,7 @@
 package com.example.a2d_game_test.models;
 
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 
 import com.example.a2d_game_test.utilities.Utils;
 

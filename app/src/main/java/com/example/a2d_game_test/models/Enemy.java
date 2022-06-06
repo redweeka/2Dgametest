@@ -4,7 +4,7 @@ import static com.example.a2d_game_test.utilities.Constants.ENEMY_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPAWN_MAX_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPAWN_MAX_POSITION_Y;
 import static com.example.a2d_game_test.utilities.Constants.ENEMY_SPEED;
-import static com.example.a2d_game_test.utilities.Constants.UPDATES_PER_SPAWN;
+import static com.example.a2d_game_test.utilities.Constants.ENEMIES_UPDATES_PER_SPAWN;
 
 import android.content.Context;
 
@@ -15,7 +15,7 @@ import com.example.a2d_game_test.R;
 // Enemy will always move towards the player
 public class Enemy extends CircleGameObject {
 
-    private static double updatesUntilNextRespawn = UPDATES_PER_SPAWN;
+    private static double updatesUntilNextRespawn = ENEMIES_UPDATES_PER_SPAWN;
     private final Player player;
 
     public Enemy(Context context, Player player) {
@@ -29,7 +29,7 @@ public class Enemy extends CircleGameObject {
         boolean readyToSpawn = false;
 
         if (updatesUntilNextRespawn <= 0) {
-            updatesUntilNextRespawn += UPDATES_PER_SPAWN;
+            updatesUntilNextRespawn += ENEMIES_UPDATES_PER_SPAWN;
             readyToSpawn = true;
         } else {
             updatesUntilNextRespawn--;
