@@ -3,11 +3,11 @@ package com.example.a2d_game_test.models;
 import static com.example.a2d_game_test.utilities.Constants.PLAYER_MAX_SPEED;
 
 import android.content.Context;
-import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
+import com.example.a2d_game_test.utilities.Utils;
 
 public class Player extends CircleGameObject {
     private final Joystick joystick;
@@ -22,6 +22,7 @@ public class Player extends CircleGameObject {
     public void update() {
         updatePlayerVelocity();
         updatePlayerPosition();
+        updatePlayerDirection();
     }
 
     private void updatePlayerVelocity() {
@@ -32,6 +33,15 @@ public class Player extends CircleGameObject {
     private void updatePlayerPosition() {
         super.positionX += super.velocityX;
         super.positionY += super.velocityY;
+    }
+
+    private void updatePlayerDirection() {
+        if (velocityX != 0 || velocityY != 0) {
+            // Normalize velocity to get direction (by velocity unit vector)
+            double distance = Utils.calculateDistanceBetween2Points(super.velocityX, super.velocityY);
+            super.directionX = super.velocityX/distance;
+            super.directionY = super.velocityY/distance;
+        }
     }
 
     public void setPosition(double positionX, double positionY) {
