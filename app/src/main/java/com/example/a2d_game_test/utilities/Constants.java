@@ -22,7 +22,7 @@ public class Constants {
     public static final int ENEMY_RADIUS = 36;
 
     // Movement
-    public static final double PLAYER_PIXELS_PER_SECOND_SPEED = 666.6;
+    public static final double PLAYER_PIXELS_PER_SECOND_SPEED = 866.2;
     public static final double PLAYER_MAX_SPEED = PLAYER_PIXELS_PER_SECOND_SPEED / MAX_UPDATES_PER_SECOND;
     public static final double ENEMY_SPEED = PLAYER_MAX_SPEED * 0.6;
 
@@ -31,4 +31,8 @@ public class Constants {
     public static final int START_JOYSTICK_POSITION_X = 266;
     public static final int OUTER_JOYSTICK_RADIUS = 166;
     public static final int INNER_JOYSTICK_RADIUS = 36;
+
+    // Bullet
+    public static final int BULLET_RADIUS = 26;
+    public static final double BULLET_SPEED = PLAYER_MAX_SPEED;
 }

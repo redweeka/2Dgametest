@@ -28,6 +28,7 @@ import com.example.a2d_game_test.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -36,6 +37,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Bullet> bullets = new ArrayList<>();
+    private int joystickPointerId;
+    private int reloadedBullets = 0;
 
     public Game(Context context) {
         super(context);
@@ -44,9 +47,21 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         this.gameLoop = new GameLoop(this, surfaceHolder);
 
-        // Initialize Game objects
-        this.joystick = new Joystick(getContext(), START_JOYSTICK_POSITION_X, START_JOYSTICK_POSITION_Y, OUTER_JOYSTICK_RADIUS, INNER_JOYSTICK_RADIUS);
-        this.player = new Player(getContext(), START_PLAYER_POSITION_X, START_PLAYER_POSITION_Y, PLAYER_RADIUS, this.joystick);
+        // Initialize the main game objects
+        this.joystick = new Joystick(
+                getContext(),
+                START_JOYSTICK_POSITION_X,
+                START_JOYSTICK_POSITION_Y,
+                OUTER_JOYSTICK_RADIUS,
+                INNER_JOYSTICK_RADIUS
+        );
+        this.player = new Player(
+                getContext(),
+                START_PLAYER_POSITION_X,
+                START_PLAYER_POSITION_Y,
+                PLAYER_RADIUS,
+                this.joystick
+        );
 
         // Everybody doing it
         setFocusable(true);
@@ -59,18 +74,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-        switch (motionEvent.getAction()) {
+        switch (motionEvent.getActionMasked()) {
             // User touched the screen
             case MotionEvent.ACTION_DOWN:
-                // If only joystick pressed -> indicate that the joystick moving
-                // Else -> shoot bullet
-                if (this.joystick.isPressed(motionEvent.getX(), motionEvent.getY())) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+                // If joystick already pressed -> reload bulled
+                // Else if joystick just pressed -> indicate that the joystick moving
+                // Else -> reload bullet
+                if (this.joystick.isPressed()) {
+                    this.reloadedBullets++;
+                } else if (this.joystick.isLocation(motionEvent.getX(), motionEvent.getY())) {
+                    this.joystickPointerId = motionEvent.getPointerId(motionEvent.getActionIndex());
                     this.joystick.setIsPressed(true);
                 } else {
-                    this.bullets.add(new Bullet(getContext(), this.player));
+                    // Add bullet to be fire when player ready
+                    this.reloadedBullets++;
                 }
 
                 return true;
+
             // User move the finger on the screen
             case MotionEvent.ACTION_MOVE:
                 if (this.joystick.isPressed()) {
@@ -78,10 +100,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 return true;
+
             // User untouched the screen
             case MotionEvent.ACTION_UP:
-                this.joystick.setIsPressed(false);
-                this.joystick.resetActuator();
+            case MotionEvent.ACTION_POINTER_UP:
+                // If the user untouched the joystick
+                if (this.joystickPointerId == motionEvent.getPointerId(motionEvent.getActionIndex())) {
+                    this.joystick.setIsPressed(false);
+                    this.joystick.resetActuator();
+                }
 
                 return true;
             default:
@@ -112,6 +139,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.joystick.draw(canvas);
         this.player.draw(canvas);
         this.enemies.forEach(enemy -> enemy.draw(canvas));
+        this.bullets.forEach(bullet -> bullet.draw(canvas));
     }
 
     public void drawUpdatesPerSecond(Canvas canvas) {
@@ -152,10 +180,41 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             this.enemies.add(newEnemy);
         }
 
-        // Update all enemies
-        this.enemies.forEach(Enemy::update);
+        // Add bullet to shot
+        if (this.reloadedBullets > 0) {
+            this.bullets.add(new Bullet(getContext(), this.player));
+            this.reloadedBullets--;
+        }
 
-        // Check if enemies catch the player
-        this.enemies = this.enemies.stream().filter(enemy -> !CircleGameObject.isColliding(enemy, this.player)).collect(Collectors.toList());
+        // Update all enemies and bullets
+        this.enemies.forEach(Enemy::update);
+        this.bullets.forEach(Bullet::update);
+
+        vanishCollidingEnemiesAndBullets();
+    }
+
+    /**
+     * Enemies that catch the player, or get hit by a bullet, will vanish, bullet that hit will vanish too.
+     */
+    private void vanishCollidingEnemiesAndBullets() {
+        this.enemies = this.enemies.stream().filter(
+                enemy -> {
+                    AtomicBoolean isEnemyGotShot = new AtomicBoolean(false);
+
+                    // Check if any bullet hit the enemy
+                    this.bullets = this.bullets.stream().filter(bullet -> {
+                        boolean isBulletHitEnemy = CircleGameObject.isColliding(bullet, enemy);
+
+                        if (isBulletHitEnemy) {
+                            isEnemyGotShot.set(true);
+                        }
+
+                        return !isBulletHitEnemy;
+                    }).collect(Collectors.toList());
+
+                    // If the enemy hit the player or got shot and remove the enemy
+                    return !CircleGameObject.isColliding(enemy, this.player) && !isEnemyGotShot.get();
+                }
+        ).collect(Collectors.toList());
     }
 }
