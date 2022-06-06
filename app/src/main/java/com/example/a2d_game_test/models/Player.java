@@ -1,6 +1,6 @@
 package com.example.a2d_game_test.models;
 
-import static com.example.a2d_game_test.utilities.Constants.PLAYER_MAX_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.Movement.PLAYER_MAX_SPEED;
 
 import android.content.Context;
 

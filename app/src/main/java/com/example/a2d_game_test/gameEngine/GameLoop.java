@@ -1,8 +1,8 @@
 package com.example.a2d_game_test.gameEngine;
 
-import static com.example.a2d_game_test.utilities.Constants.MAX_UPDATES_PER_SECOND;
-import static com.example.a2d_game_test.utilities.Constants.SECOND_IN_MILLISECOND;
-import static com.example.a2d_game_test.utilities.Constants.UPDATES_PER_SECOND_PERIOD;
+import static com.example.a2d_game_test.utilities.Constants.GameLoop.MAX_UPDATES_PER_SECOND;
+import static com.example.a2d_game_test.utilities.Constants.GameLoop.SECOND_IN_MILLISECOND;
+import static com.example.a2d_game_test.utilities.Constants.GameLoop.UPDATES_PER_SECOND_PERIOD;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -66,7 +66,7 @@ public class GameLoop extends Thread {
                 e.printStackTrace();
             } finally {
                 try {
-                    if(canvas != null){
+                    if (canvas != null) {
                         this.surfaceHolder.unlockCanvasAndPost(canvas);
                         framesPerSecondCount++;
                     }
