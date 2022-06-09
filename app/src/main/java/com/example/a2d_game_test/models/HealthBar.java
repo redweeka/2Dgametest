@@ -1,6 +1,6 @@
 package com.example.a2d_game_test.models;
 
-import static com.example.a2d_game_test.utilities.Constants.PLAYER_MAX_HEALTH;
+import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_MAX_HEALTH;
 
 import android.graphics.Canvas;
 

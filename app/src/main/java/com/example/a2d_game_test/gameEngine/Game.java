@@ -1,12 +1,17 @@
 package com.example.a2d_game_test.gameEngine;
 
-import static com.example.a2d_game_test.utilities.Constants.INNER_JOYSTICK_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.OUTER_JOYSTICK_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.PLAYER_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.START_JOYSTICK_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.START_PLAYER_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.START_PLAYER_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.FRAME_PER_SECOND;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.MAX_TEXT_LENGTH;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_BORDER;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.GameDetails.UPDATES_PER_SECOND;
+import static com.example.a2d_game_test.utilities.Constants.Joystick.INNER_JOYSTICK_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.Joystick.OUTER_JOYSTICK_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.Joystick.START_JOYSTICK_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.Joystick.START_JOYSTICK_POSITION_Y;
+import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.Player.START_PLAYER_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.Player.START_PLAYER_POSITION_Y;
 import static com.example.a2d_game_test.utilities.Constants.TEXT_SIZE;
 
 import android.content.Context;
@@ -143,29 +148,36 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawUpdatesPerSecond(Canvas canvas) {
-        String averageUpdatesPerSecond = Double.toString(this.gameLoop.getAverageUpdatesPerSecond());
+        double averageUpdatesPerSecond = this.gameLoop.getAverageUpdatesPerSecond();
+        String textToDraw = this.getTextFormattedTODraw(UPDATES_PER_SECOND, averageUpdatesPerSecond);
 
-        int color = ContextCompat.getColor(getContext(), R.color.silver);
-
+        int color = ContextCompat.getColor(getContext(), R.color.teal_200);
         Paint paint = new Paint();
+
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        // Random numbers
-        canvas.drawText("UpdatesPerSecond: " + averageUpdatesPerSecond, 156, 246, paint);
+        canvas.drawText(textToDraw, 0, TEXT_POSITION_Y, paint);
     }
 
     public void drawFramesPerSecond(Canvas canvas) {
-        String averageFramesPerSecond = Double.toString(this.gameLoop.getAverageFramesPerSecond());
+        double averageFramesPerSecond = this.gameLoop.getAverageFramesPerSecond();
+        String textToDraw = this.getTextFormattedTODraw(FRAME_PER_SECOND, averageFramesPerSecond);
 
-        int color = ContextCompat.getColor(getContext(), R.color.red);
-
+        int color = ContextCompat.getColor(getContext(), R.color.teal_200);
         Paint paint = new Paint();
+
         paint.setColor(color);
         paint.setTextSize(TEXT_SIZE);
 
-        // Random numbers
-        canvas.drawText("FramesPerSecond: " + averageFramesPerSecond, 156, 426, paint);
+        canvas.drawText(textToDraw, 0, (TEXT_POSITION_Y * 2), paint);
+    }
+
+    /**
+     * @return: "<TEXT> : <DOUBLE_NUMBER>"
+     */
+    private String getTextFormattedTODraw(String textKey, double valve) {
+        return String.format("%" + -MAX_TEXT_LENGTH + "s" + TEXT_BORDER + " %f", textKey, valve);
     }
 
     // Responsible for game update and everything that happen when it does
