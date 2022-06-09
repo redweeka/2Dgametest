@@ -12,7 +12,7 @@ import com.example.a2d_game_test.utilities.Utils;
 
 public class Player extends CircleGameObject {
     private final Joystick joystick;
-    public float healthPoints;
+    public float currHealthPoints;
     private HealthBar healthBar;
 
     public Player(Context context, double playerPositionX, double playerPositionY, double playerRadius, Joystick joystick) {

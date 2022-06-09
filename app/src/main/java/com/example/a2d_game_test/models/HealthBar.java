@@ -19,8 +19,8 @@ public class HealthBar extends GameObject {
     public void draw(Canvas canvas) {
         float playerPositionX = (float) this.player.positionX;
         float playerPositionY = (float) this.player.positionY;
-        float distanceToPlayer = 26;
-        float healthPointPercentage = this.player.healthPoints/PLAYER_MAX_HEALTH;
+        float distanceToPlayer = ;
+        float healthPointPercentage = this.player.currHealthPoints /PLAYER_MAX_HEALTH;
 
         // Draw health bar background
         canvas.drawRect(
