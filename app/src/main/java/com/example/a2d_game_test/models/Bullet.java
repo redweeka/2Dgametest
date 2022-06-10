@@ -4,6 +4,7 @@ import static com.example.a2d_game_test.utilities.Constants.Bullet.BULLET_RADIUS
 import static com.example.a2d_game_test.utilities.Constants.Bullet.BULLET_SPEED;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -19,8 +20,21 @@ public class Bullet extends CircleGameObject{
                 ContextCompat.getColor(context, R.color.bullet)
         );
 
-        super.velocityX = shooter.directionX() * BULLET_SPEED;
-        super.velocityY = shooter.directionY() * BULLET_SPEED;
+        initBulletVelocity(shooter);
+    }
+
+    private void initBulletVelocity(CircleGameObject shooter) {
+        // If player has not move choose a random direction
+        double bulletVelocityX = shooter.directionX() * BULLET_SPEED;
+        double bulletVelocityY = shooter.directionY() * BULLET_SPEED;
+
+        if (bulletVelocityX == 0  && bulletVelocityY == 0) {
+            bulletVelocityX = BULLET_SPEED;
+            bulletVelocityY = BULLET_SPEED;
+        }
+
+        super.velocityX = bulletVelocityX;
+        super.velocityY = bulletVelocityY;
     }
 
     @Override

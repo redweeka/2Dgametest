@@ -1,9 +1,9 @@
 package com.example.a2d_game_test.models;
 
+import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMIES_UPDATES_PER_SPAWN;
 import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.Enemy.UPDATES_PER_SPAWN;
 import static com.example.a2d_game_test.utilities.Constants.Movement.ENEMY_SPEED;
 
 import android.content.Context;
@@ -15,11 +15,16 @@ import com.example.a2d_game_test.R;
 // Enemy will always move towards the player
 public class Enemy extends CircleGameObject {
 
-    private static double updatesUntilNextRespawn = UPDATES_PER_SPAWN;
+    private static double updatesUntilNextRespawn = ENEMIES_UPDATES_PER_SPAWN;
     private final Player player;
 
     public Enemy(Context context, Player player) {
-        super(Math.random() * ENEMY_SPAWN_MAX_POSITION_X, Math.random() * ENEMY_SPAWN_MAX_POSITION_Y, ENEMY_RADIUS, ContextCompat.getColor(context, R.color.enemy));
+        super(
+                Math.random() * ENEMY_SPAWN_MAX_POSITION_X,
+                Math.random() * ENEMY_SPAWN_MAX_POSITION_Y,
+                ENEMY_RADIUS,
+                ContextCompat.getColor(context, R.color.red)
+        );
 
         this.player = player;
     }
@@ -29,7 +34,7 @@ public class Enemy extends CircleGameObject {
         boolean readyToSpawn = false;
 
         if (updatesUntilNextRespawn <= 0) {
-            updatesUntilNextRespawn += UPDATES_PER_SPAWN;
+            updatesUntilNextRespawn += ENEMIES_UPDATES_PER_SPAWN;
             readyToSpawn = true;
         } else {
             updatesUntilNextRespawn--;

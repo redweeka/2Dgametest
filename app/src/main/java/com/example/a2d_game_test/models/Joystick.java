@@ -44,7 +44,7 @@ public class Joystick {
         this.innerJoystickRadius = innerJoystickRadius;
 
         this.innerJoystickPaint = new Paint();
-        int innerJoystickColor = ContextCompat.getColor(context, R.color.inner_joystick);
+        int innerJoystickColor = ContextCompat.getColor(context, R.color.black);
         this.innerJoystickPaint.setColor(innerJoystickColor);
         this.innerJoystickPaint.setStyle(Paint.Style.FILL_AND_STROKE);
     }

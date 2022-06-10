@@ -206,7 +206,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Enemies that catch the player, or get hit by a bullet, will vanish, bullet that hit will vanish too.
+     * Enemies that catch the player -> will vanish and subtract player life
+     * Enemies that get hit by a bullet, will vanish with the bullet.
      */
     private void vanishCollidingEnemiesAndBullets() {
         this.enemies = this.enemies.stream().filter(
@@ -224,8 +225,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                         return !isBulletHitEnemy;
                     }).collect(Collectors.toList());
 
-                    // If the enemy hit the player or got shot and remove the enemy
-                    return !CircleGameObject.isColliding(enemy, this.player) && !isEnemyGotShot.get();
+                    // Check if enemy catch the player and subtract the player life
+                    boolean isEnemyCatchPlayer = CircleGameObject.isColliding(enemy, this.player);
+
+                    if (isEnemyCatchPlayer) {
+                        this.player.subtractHealthPoint();
+                    }
+
+                    // If the enemy catch the player or got shot and remove the enemy
+                    return !isEnemyCatchPlayer && !isEnemyGotShot.get();
                 }
         ).collect(Collectors.toList());
     }
