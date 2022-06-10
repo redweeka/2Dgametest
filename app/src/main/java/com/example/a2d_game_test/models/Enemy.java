@@ -19,7 +19,12 @@ public class Enemy extends CircleGameObject {
     private final Player player;
 
     public Enemy(Context context, Player player) {
-        super(Math.random() * ENEMY_SPAWN_MAX_POSITION_X, Math.random() * ENEMY_SPAWN_MAX_POSITION_Y, ENEMY_RADIUS, ContextCompat.getColor(context, R.color.enemy));
+        super(
+                Math.random() * ENEMY_SPAWN_MAX_POSITION_X,
+                Math.random() * ENEMY_SPAWN_MAX_POSITION_Y,
+                ENEMY_RADIUS,
+                ContextCompat.getColor(context, R.color.red)
+        );
 
         this.player = player;
     }

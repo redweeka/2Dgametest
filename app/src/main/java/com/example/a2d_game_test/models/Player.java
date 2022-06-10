@@ -1,6 +1,8 @@
 package com.example.a2d_game_test.models;
 
+import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_DAMAGE_POINTS;
 import static com.example.a2d_game_test.utilities.Constants.Movement.PLAYER_MAX_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_MAX_HEALTH_POINTS;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,10 +18,11 @@ public class Player extends CircleGameObject {
     private HealthBar healthBar;
 
     public Player(Context context, double playerPositionX, double playerPositionY, double playerRadius, Joystick joystick) {
-        super(playerPositionX, playerPositionY, playerRadius, ContextCompat.getColor(context, R.color.player));
+        super(playerPositionX, playerPositionY, playerRadius, ContextCompat.getColor(context, R.color.blue));
 
         this.joystick = joystick;
-        this.healthBar = new HealthBar(this);
+        this.healthBar = new HealthBar(context, this);
+        this.currHealthPoints = PLAYER_MAX_HEALTH_POINTS;
     }
 
     @Override
@@ -57,5 +60,13 @@ public class Player extends CircleGameObject {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         this.healthBar.draw(canvas);
+    }
+
+    public void subtractHealthPoint() {
+        this.currHealthPoints -= ENEMY_DAMAGE_POINTS;
+
+        if (this.currHealthPoints <= 0) {
+            this.currHealthPoints = 0;
+        }
     }
 }

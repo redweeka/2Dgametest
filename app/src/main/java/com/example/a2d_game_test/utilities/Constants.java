@@ -13,7 +13,7 @@ public class Constants {
         public static final int START_PLAYER_POSITION_Y = 466;
         public static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
         public static final int PLAYER_RADIUS = 36;
-        public static final int PLAYER_MAX_HEALTH = 100;
+        public static final int PLAYER_MAX_HEALTH_POINTS = 10;
     }
 
     public static class Enemy {
@@ -23,6 +23,7 @@ public class Constants {
         public static final int ENEMY_SPAWN_MAX_POSITION_X = 1666;
         public static final int ENEMY_SPAWN_MAX_POSITION_Y = 866;
         public static final int ENEMY_RADIUS = 36;
+        public static final int ENEMY_DAMAGE_POINTS = 1;
     }
 
     public static class Movement {
@@ -49,5 +50,14 @@ public class Constants {
     public static class Bullet {
         public static final int BULLET_RADIUS = 26;
         public static final double BULLET_SPEED = Movement.PLAYER_MAX_SPEED;
+    }
+
+    public static class HealthBar {
+        public static final int HEALTH_BAR_DISTANCE_FROM_PLAYER = 36;
+        public static final int HEALTH_BAR_FRAME_WIDTH = 96;
+        public static final int HEALTH_BAR_FRAME_HEIGHT = 26;
+        public static final int HEALTH_BAR_PADDING = 6;
+        public static final int HEALTH_BAR_WIDTH = HEALTH_BAR_FRAME_WIDTH - 2*HEALTH_BAR_PADDING;
+        public static final int HEALTH_BAR_HEIGHT = HEALTH_BAR_FRAME_HEIGHT - 2*HEALTH_BAR_PADDING;
     }
 }
