@@ -1,4 +1,4 @@
-package com.example.a2d_game_test.models;
+package com.example.a2d_game_test.models.gamePanels;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,12 +14,12 @@ public class Joystick {
     private final int outerJoystickCirclePositionX;
     private final int outerJoystickCirclePositionY;
     private final int outerJoystickRadius;
-    private final Paint outerJoystickPaint;
+    private final Paint outerJoystickPaint = new Paint();
 
     private int innerJoystickCirclePositionX;
     private int innerJoystickCirclePositionY;
     private final int innerJoystickRadius;
-    private final Paint innerJoystickPaint;
+    private final Paint innerJoystickPaint = new Paint();
 
     // Joystick action members
     private double joystickCenterToTouchDistance;
@@ -33,7 +33,6 @@ public class Joystick {
         this.outerJoystickCirclePositionY = joystickPositionY;
         this.outerJoystickRadius = outerJoystickRadius;
 
-        this.outerJoystickPaint = new Paint();
         int outerJoystickColor = ContextCompat.getColor(context, R.color.outer_joystick);
         this.outerJoystickPaint.setColor(outerJoystickColor);
         this.outerJoystickPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -43,7 +42,6 @@ public class Joystick {
         this.innerJoystickCirclePositionY = joystickPositionY;
         this.innerJoystickRadius = innerJoystickRadius;
 
-        this.innerJoystickPaint = new Paint();
         int innerJoystickColor = ContextCompat.getColor(context, R.color.black);
         this.innerJoystickPaint.setColor(innerJoystickColor);
         this.innerJoystickPaint.setStyle(Paint.Style.FILL_AND_STROKE);

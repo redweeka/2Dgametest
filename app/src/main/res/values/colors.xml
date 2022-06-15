@@ -18,5 +18,6 @@
 
     <!-- Game related colors   -->
     <color name="bullet">#FF9900</color>
-    <color name="outer_joystick">#859F9F85</color>
+    <color name="outer_joystick">#96969696</color>
+    <color name="game_over">#D61111</color>
 </resources>

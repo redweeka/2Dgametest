@@ -1,7 +1,7 @@
-package com.example.a2d_game_test.models;
+package com.example.a2d_game_test.models.gameObjects;
 
-import static com.example.a2d_game_test.utilities.Constants.Bullet.BULLET_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.MovementSpeed.BULLET_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.BulletConstants.BULLET_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.MovementSpeedConstants.BULLET_SPEED;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
 
-public class Bullet extends CircleGameObject{
+public class Bullet extends CircleGameObject {
 
     public Bullet(Context context, CircleGameObject shooter) {
         super(
