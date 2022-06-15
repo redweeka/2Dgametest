@@ -1,35 +1,17 @@
 package com.example.a2d_game_test.gameEngine;
 
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.FRAME_PER_SECOND;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.MAX_TEXT_LENGTH;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_BORDER;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.TEXT_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.GameDetails.UPDATES_PER_SECOND;
-import static com.example.a2d_game_test.utilities.Constants.Joystick.INNER_JOYSTICK_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.Joystick.OUTER_JOYSTICK_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.Joystick.START_JOYSTICK_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.Joystick.START_JOYSTICK_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.Player.START_PLAYER_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.Player.START_PLAYER_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.TEXT_SIZE;
+import static com.example.a2d_game_test.utilities.Constants.JoystickConstants.*;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.*;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
-import com.example.a2d_game_test.R;
-import com.example.a2d_game_test.models.Bullet;
-import com.example.a2d_game_test.models.CircleGameObject;
-import com.example.a2d_game_test.models.Enemy;
-import com.example.a2d_game_test.models.Joystick;
-import com.example.a2d_game_test.models.Player;
+import com.example.a2d_game_test.models.gameObjects.*;
+import com.example.a2d_game_test.models.gamePanels.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +20,14 @@ import java.util.stream.Collectors;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final GameLoop gameLoop;
-    private final Joystick joystick;
     private final Player player;
+    private final Joystick joystick;
+    private int joystickPointerId;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Bullet> bullets = new ArrayList<>();
-    private int joystickPointerId;
     private int reloadedBullets = 0;
+    private final GameOverPanel gameOverPanel;
+    private final GamePerformances gamePerformances;
 
     public Game(Context context) {
         super(context);
@@ -52,7 +36,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         this.gameLoop = new GameLoop(this, surfaceHolder);
 
-        // Initialize the main game objects
+        // Initialize all non-interactive game objects (such as panels)
+        this.gameOverPanel = new GameOverPanel(context);
         this.joystick = new Joystick(
                 getContext(),
                 START_JOYSTICK_POSITION_X,
@@ -60,6 +45,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 OUTER_JOYSTICK_RADIUS,
                 INNER_JOYSTICK_RADIUS
         );
+        this.gamePerformances = new GamePerformances(context, this.gameLoop);
+
+        // Initialize the main game objects
         this.player = new Player(
                 getContext(),
                 START_PLAYER_POSITION_X,
@@ -138,71 +126,44 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        drawUpdatesPerSecond(canvas);
-        drawFramesPerSecond(canvas);
-
-        this.joystick.draw(canvas);
         this.player.draw(canvas);
         this.enemies.forEach(enemy -> enemy.draw(canvas));
         this.bullets.forEach(bullet -> bullet.draw(canvas));
-    }
 
-    public void drawUpdatesPerSecond(Canvas canvas) {
-        double averageUpdatesPerSecond = this.gameLoop.getAverageUpdatesPerSecond();
-        String textToDraw = this.getTextFormattedTODraw(UPDATES_PER_SECOND, averageUpdatesPerSecond);
+        this.joystick.draw(canvas);
+        this.gamePerformances.draw(canvas);
 
-        int color = ContextCompat.getColor(getContext(), R.color.teal_200);
-        Paint paint = new Paint();
-
-        paint.setColor(color);
-        paint.setTextSize(TEXT_SIZE);
-
-        canvas.drawText(textToDraw, 0, TEXT_POSITION_Y, paint);
-    }
-
-    public void drawFramesPerSecond(Canvas canvas) {
-        double averageFramesPerSecond = this.gameLoop.getAverageFramesPerSecond();
-        String textToDraw = this.getTextFormattedTODraw(FRAME_PER_SECOND, averageFramesPerSecond);
-
-        int color = ContextCompat.getColor(getContext(), R.color.teal_200);
-        Paint paint = new Paint();
-
-        paint.setColor(color);
-        paint.setTextSize(TEXT_SIZE);
-
-        canvas.drawText(textToDraw, 0, (TEXT_POSITION_Y * 2), paint);
-    }
-
-    /**
-     * @return: "<TEXT> : <DOUBLE_NUMBER>"
-     */
-    private String getTextFormattedTODraw(String textKey, double valve) {
-        return String.format("%" + -MAX_TEXT_LENGTH + "s" + TEXT_BORDER + " %f", textKey, valve);
+        // If player dead -> game over
+        if (player.currHealthPoints() <= 0) {
+            this.gameOverPanel.draw(canvas);
+        }
     }
 
     // Responsible for game update and everything that happen when it does
     public void update() {
+        // Only keep updating game if player is alive
+        if (player.currHealthPoints() > 0) {
+            this.joystick.update();
+            this.player.update();
 
-        this.joystick.update();
-        this.player.update();
+            // Spawn enemy when the time is right
+            if (Enemy.readyToSpawn()) {
+                Enemy newEnemy = new Enemy(getContext(), this.player);
+                this.enemies.add(newEnemy);
+            }
 
-        // Spawn enemy when the time is right
-        if (Enemy.readyToSpawn()) {
-            Enemy newEnemy = new Enemy(getContext(), this.player);
-            this.enemies.add(newEnemy);
+            // Add bullet to shot
+            if (this.reloadedBullets > 0) {
+                this.bullets.add(new Bullet(getContext(), this.player));
+                this.reloadedBullets--;
+            }
+
+            // Update all enemies and bullets
+            this.enemies.forEach(Enemy::update);
+            this.bullets.forEach(Bullet::update);
+
+            vanishCollidingEnemiesAndBullets();
         }
-
-        // Add bullet to shot
-        if (this.reloadedBullets > 0) {
-            this.bullets.add(new Bullet(getContext(), this.player));
-            this.reloadedBullets--;
-        }
-
-        // Update all enemies and bullets
-        this.enemies.forEach(Enemy::update);
-        this.bullets.forEach(Bullet::update);
-
-        vanishCollidingEnemiesAndBullets();
     }
 
     /**

@@ -1,8 +1,6 @@
 package com.example.a2d_game_test.gameEngine;
 
-import static com.example.a2d_game_test.utilities.Constants.GameLoop.MAX_UPDATES_PER_SECOND;
-import static com.example.a2d_game_test.utilities.Constants.GameLoop.SECOND_IN_MILLISECOND;
-import static com.example.a2d_game_test.utilities.Constants.GameLoop.UPDATES_PER_SECOND_PERIOD;
+import static com.example.a2d_game_test.utilities.Constants.GameLoopConstants.*;
 
 import android.graphics.Canvas;
 import android.util.Log;

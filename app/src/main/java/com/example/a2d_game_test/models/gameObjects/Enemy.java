@@ -1,10 +1,7 @@
-package com.example.a2d_game_test.models;
+package com.example.a2d_game_test.models.gameObjects;
 
-import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMIES_UPDATES_PER_SPAWN;
-import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_X;
-import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_SPAWN_MAX_POSITION_Y;
-import static com.example.a2d_game_test.utilities.Constants.Movement.ENEMY_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.EnemyConstants.*;
+import static com.example.a2d_game_test.utilities.Constants.MovementSpeedConstants.ENEMY_SPEED;
 
 import android.content.Context;
 

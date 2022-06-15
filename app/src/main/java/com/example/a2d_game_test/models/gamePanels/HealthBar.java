@@ -1,11 +1,7 @@
-package com.example.a2d_game_test.models;
+package com.example.a2d_game_test.models.gamePanels;
 
-import static com.example.a2d_game_test.utilities.Constants.HealthBar.HEALTH_BAR_DISTANCE_FROM_PLAYER;
-import static com.example.a2d_game_test.utilities.Constants.HealthBar.HEALTH_BAR_FRAME_HEIGHT;
-import static com.example.a2d_game_test.utilities.Constants.HealthBar.HEALTH_BAR_FRAME_WIDTH;
-import static com.example.a2d_game_test.utilities.Constants.HealthBar.HEALTH_BAR_PADDING;
-import static com.example.a2d_game_test.utilities.Constants.HealthBar.HEALTH_BAR_WIDTH;
-import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_MAX_HEALTH_POINTS;
+import static com.example.a2d_game_test.utilities.Constants.HealthBarConstants.*;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_MAX_HEALTH_POINTS;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,6 +10,8 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import com.example.a2d_game_test.R;
+import com.example.a2d_game_test.models.gameObjects.GameObject;
+import com.example.a2d_game_test.models.gameObjects.Player;
 
 // A bar that represent the life of the player
 public class HealthBar extends GameObject {
@@ -23,7 +21,7 @@ public class HealthBar extends GameObject {
     private final Paint healthBarPaint = new Paint();
 
     public HealthBar(Context context, Player player) {
-        super(player.positionX, player.positionY);
+        super(player.positionX(), player.positionY());
 
         this.player = player;
         this.healthBarFramePaint.setColor(ContextCompat.getColor(context, R.color.silver));
@@ -32,11 +30,11 @@ public class HealthBar extends GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        float playerPositionX = (float) this.player.positionX;
-        float playerPositionY = (float) this.player.positionY;
+        float playerPositionX = (float) this.player.positionX();
+        float playerPositionY = (float) this.player.positionY();
         float distanceToPlayer = HEALTH_BAR_DISTANCE_FROM_PLAYER;
         // Calculate life in percentage to show graphic health bar
-        float healthPointPercentage = this.player.currHealthPoints / PLAYER_MAX_HEALTH_POINTS;
+        float healthPointPercentage = this.player.currHealthPoints() / PLAYER_MAX_HEALTH_POINTS;
 
         // Calculate exact health bar frame properties
         float healthBarFrameLeftPosition = playerPositionX - HEALTH_BAR_FRAME_WIDTH /2;

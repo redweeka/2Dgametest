@@ -1,18 +1,16 @@
-package com.example.a2d_game_test.models;
+package com.example.a2d_game_test.models.gameObjects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public abstract class CircleGameObject extends GameObject {
     protected final double radius;
-    protected final Paint paint;
+    protected final Paint paint = new Paint();
 
     public CircleGameObject(double positionX, double positionY, double radius, int paintColor) {
         super(positionX, positionY);
 
         this.radius = radius;
-
-        this.paint = new Paint();
         this.paint.setColor(paintColor);
     }
 
