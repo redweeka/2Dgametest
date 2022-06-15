@@ -39,11 +39,10 @@ public class Constants {
     }
 
     public static class GameLoopDetailsConstants {
-        // TODO: 6/15/2022 understand string format and refactor names
         public static final float TEXT_SIZE = 56;
         public static final String UPDATES_PER_SECOND_TEXT = "UpdatesPerSecond";
         public static final String FRAME_PER_SECOND_TEXT = "FramesPerSecond";
-        public static final int MAX_TEXT_LENGTH = UPDATES_PER_SECOND_TEXT.length() + 1;
+        public static final int MAX_DISPLAY_TEXT_LENGTH = UPDATES_PER_SECOND_TEXT.length() + 1;
         public static final String TEXT_BORDER = ":";
         public static final float TEXT_POSITION_X = 0;
         public static final float TEXT_POSITION_Y = TEXT_SIZE;
