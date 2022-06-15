@@ -1,7 +1,7 @@
 package com.example.a2d_game_test.models;
 
 import static com.example.a2d_game_test.utilities.Constants.Enemy.ENEMY_DAMAGE_POINTS;
-import static com.example.a2d_game_test.utilities.Constants.Movement.PLAYER_MAX_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.MovementSpeed.PLAYER_MAX_SPEED;
 import static com.example.a2d_game_test.utilities.Constants.Player.PLAYER_MAX_HEALTH_POINTS;
 
 import android.content.Context;

@@ -26,10 +26,11 @@ public class Constants {
         public static final int ENEMY_DAMAGE_POINTS = 1;
     }
 
-    public static class Movement {
+    public static class MovementSpeed {
         public static final double PLAYER_PIXELS_PER_SECOND_SPEED = 866.2;
         public static final double PLAYER_MAX_SPEED = PLAYER_PIXELS_PER_SECOND_SPEED / GameLoop.MAX_UPDATES_PER_SECOND;
         public static final double ENEMY_SPEED = PLAYER_MAX_SPEED * 0.6;
+        public static final double BULLET_SPEED = PLAYER_MAX_SPEED * 1.6;
     }
 
     public static class Joystick {
@@ -49,7 +50,6 @@ public class Constants {
 
     public static class Bullet {
         public static final int BULLET_RADIUS = 26;
-        public static final double BULLET_SPEED = Movement.PLAYER_MAX_SPEED;
     }
 
     public static class HealthBar {

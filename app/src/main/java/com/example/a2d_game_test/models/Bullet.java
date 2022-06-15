@@ -1,10 +1,9 @@
 package com.example.a2d_game_test.models;
 
 import static com.example.a2d_game_test.utilities.Constants.Bullet.BULLET_RADIUS;
-import static com.example.a2d_game_test.utilities.Constants.Bullet.BULLET_SPEED;
+import static com.example.a2d_game_test.utilities.Constants.MovementSpeed.BULLET_SPEED;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
