@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
-    private final GameLoop gameLoop;
+    private GameLoop gameLoop;
     private final Player player;
     private final Joystick joystick;
     private int joystickPointerId;
@@ -32,9 +32,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public Game(Context context) {
         super(context);
 
-        SurfaceHolder surfaceHolder = getHolder();
-        surfaceHolder.addCallback(this);
-        this.gameLoop = new GameLoop(this, surfaceHolder);
+        createNewGameLoop();
 
         // Initialize all non-interactive game objects (such as panels)
         this.gameOverPanel = new GameOverPanel(context);
@@ -58,6 +56,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Everybody doing it
         setFocusable(true);
+    }
+
+    private void createNewGameLoop() {
+        SurfaceHolder surfaceHolder = getHolder();
+        surfaceHolder.addCallback(this);
+        this.gameLoop = new GameLoop(this, surfaceHolder);
     }
 
     /**
@@ -111,15 +115,22 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
+        // If game loop (which is a thread) terminated due to game pause -> create new game loop
+        if (this.gameLoop.getState().equals(Thread.State.TERMINATED)) {
+            createNewGameLoop();
+        }
+
         this.gameLoop.startLoop();
     }
 
     @Override
-    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-    }
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {}
 
     @Override
-    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {}
+
+    public void pause() {
+        this.gameLoop.stopLoop();
     }
 
     @Override
