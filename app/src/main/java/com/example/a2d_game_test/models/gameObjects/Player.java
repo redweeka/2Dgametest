@@ -24,7 +24,7 @@ public class Player extends CircleGameObject {
 
         this.joystick = joystick;
         this.healthBar = new HealthBar(context, this);
-        this.currHealthPoints = PLAYER_MAX_HEALTH_POINTS;
+        restartCurrHealthPoints();
     }
 
     @Override
@@ -82,5 +82,9 @@ public class Player extends CircleGameObject {
 
     public double positionY() {
         return this.positionY;
+    }
+
+    public void restartCurrHealthPoints() {
+        this.currHealthPoints = PLAYER_MAX_HEALTH_POINTS;
     }
 }
