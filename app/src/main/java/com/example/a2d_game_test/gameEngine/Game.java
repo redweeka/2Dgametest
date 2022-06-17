@@ -3,8 +3,10 @@ package com.example.a2d_game_test.gameEngine;
 import static com.example.a2d_game_test.utilities.Constants.JoystickConstants.*;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.*;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +30,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int reloadedBullets = 0;
     private final GameOverPanel gameOverPanel;
     private final GamePerformances gamePerformances;
+    private GameDisplay gameDisplay;
 
     public Game(Context context) {
         super(context);
@@ -47,7 +50,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         );
         this.gamePerformances = new GamePerformances(context, this.gameLoop);
 
-        // Initialize the main game objects
+        // Initialize main game objects
         this.player = new Player(
                 getContext(),
                 START_PLAYER_POSITION_X,
@@ -55,6 +58,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 PLAYER_RADIUS,
                 this.joystick
         );
+
+        // Get screen sizes for game display
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        // Initialize game display and center it around the player
+        this.gameDisplay = new GameDisplay(this.player, displayMetrics.widthPixels, displayMetrics.heightPixels);
 
         // Everybody doing it
         setFocusable(true);
@@ -137,10 +147,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        this.player.draw(canvas);
-        this.enemies.forEach(enemy -> enemy.draw(canvas));
-        this.bullets.forEach(bullet -> bullet.draw(canvas));
+        // Draw game objects
+        this.player.draw(canvas, this.gameDisplay);
+        this.enemies.forEach(enemy -> enemy.draw(canvas, this.gameDisplay));
+        this.bullets.forEach(bullet -> bullet.draw(canvas, this.gameDisplay));
 
+        // Draw game panels
         this.joystick.draw(canvas);
         this.gamePerformances.draw(canvas);
 
@@ -175,6 +187,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
             vanishCollidingEnemiesAndBullets();
         }
+
+        // Needed to be updated after all game objects for calculating position correctly
+        this.gameDisplay.update();
     }
 
     /**
