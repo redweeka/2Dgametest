@@ -32,7 +32,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public Game(Context context) {
         super(context);
 
-        createNewGameLoop();
+        SurfaceHolder surfaceHolder = getHolder();
+        surfaceHolder.addCallback(this);
+        createNewGameLoop(surfaceHolder);
 
         // Initialize all non-interactive game objects (such as panels)
         this.gameOverPanel = new GameOverPanel(context);
@@ -58,10 +60,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
     }
 
-    private void createNewGameLoop() {
-        SurfaceHolder surfaceHolder = getHolder();
-        surfaceHolder.addCallback(this);
-        this.gameLoop = new GameLoop(this, surfaceHolder);
+    private void createNewGameLoop(@NonNull SurfaceHolder holder) {
+        this.gameLoop = new GameLoop(this, holder);
     }
 
     /**
@@ -117,7 +117,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         // If game loop (which is a thread) terminated due to game pause -> create new game loop
         if (this.gameLoop.getState().equals(Thread.State.TERMINATED)) {
-            createNewGameLoop();
+            createNewGameLoop(holder);
         }
 
         this.gameLoop.startLoop();
