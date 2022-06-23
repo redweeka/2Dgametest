@@ -40,8 +40,8 @@ public class Constants {
 
     public static class GameLoopDetailsConstants {
         public static final float TEXT_SIZE = 56;
-        public static final String UPDATES_PER_SECOND_TEXT = "UpdatesPerSecond";
-        public static final String FRAME_PER_SECOND_TEXT = "FramesPerSecond";
+        public static final String UPDATES_PER_SECOND_TEXT = "UPS";
+        public static final String FRAME_PER_SECOND_TEXT = "FPS";
         public static final int MAX_DISPLAY_TEXT_LENGTH = UPDATES_PER_SECOND_TEXT.length() + 1;
         public static final String TEXT_BORDER = ":";
         public static final float TEXT_POSITION_X = 0;

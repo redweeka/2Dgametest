@@ -1,6 +1,8 @@
 package com.example.a2d_game_test.models.gamePanels;
 
 import static com.example.a2d_game_test.utilities.Constants.GameOverConstants.*;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_Y;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -20,6 +22,10 @@ public class GameOverPanel {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawText(GAME_OVER_TEXT, GAME_OVER_POSITION_X, GAME_OVER_POSITION_Y, this.gameOverPaint);
+        float gameOverMiddlePositionX = START_PLAYER_POSITION_X - 446;
+        float gameOverMiddlePositionY = START_PLAYER_POSITION_Y + 46;
+
+        canvas.drawText(GAME_OVER_TEXT, gameOverMiddlePositionX, gameOverMiddlePositionY, this.gameOverPaint);
+//        canvas.drawText(GAME_OVER_TEXT, GAME_OVER_POSITION_X, GAME_OVER_POSITION_Y, this.gameOverPaint);
     }
 }
