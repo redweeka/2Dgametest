@@ -28,8 +28,13 @@ public abstract class CircleGameObject extends GameObject {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.drawCircle((float) this.positionX, (float) this.positionY, (float) this.radius, this.paint);
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        canvas.drawCircle(
+                (float) gameDisplay.gameDisplayCoordinateX(this.positionX),
+                (float) gameDisplay.gameDisplayCoordinateY(this.positionY),
+                (float) this.radius,
+                this.paint
+        );
     }
 
     @Override

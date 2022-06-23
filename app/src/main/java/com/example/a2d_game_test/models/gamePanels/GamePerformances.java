@@ -56,6 +56,6 @@ public class GamePerformances {
      * "<LONG_TEXT> : <DOUBLE_NUMBER>"
      */
     private String getTextFormattedTODraw(String textKey, double valve) {
-        return String.format("%" + -MAX_DISPLAY_TEXT_LENGTH + "s" + TEXT_BORDER + " %f", textKey, valve);
+        return String.format("%" + -MAX_DISPLAY_TEXT_LENGTH + "s" + TEXT_BORDER + " %.1f", textKey, valve);
     }
 }

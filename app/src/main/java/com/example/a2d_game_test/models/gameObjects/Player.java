@@ -53,15 +53,10 @@ public class Player extends CircleGameObject {
         }
     }
 
-    public void setPosition(double positionX, double positionY) {
-        super.positionX = positionX;
-        super.positionY = positionY;
-    }
-
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        this.healthBar.draw(canvas);
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        super.draw(canvas, gameDisplay);
+        this.healthBar.draw(canvas, gameDisplay);
     }
 
     public void subtractHealthPoint() {
