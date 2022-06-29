@@ -3,6 +3,7 @@ package com.example.a2d_game_test.models.gameObjects;
 import static com.example.a2d_game_test.utilities.Constants.EnemyConstants.ENEMY_DAMAGE_POINTS;
 import static com.example.a2d_game_test.utilities.Constants.MovementSpeedConstants.PLAYER_MAX_SPEED;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_MAX_HEALTH_POINTS;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_SPRITE_RADIUS;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,19 +13,22 @@ import androidx.core.content.ContextCompat;
 import com.example.a2d_game_test.R;
 import com.example.a2d_game_test.models.gamePanels.HealthBar;
 import com.example.a2d_game_test.models.gamePanels.Joystick;
+import com.example.a2d_game_test.models.graphics.Sprite;
 import com.example.a2d_game_test.utilities.Utils;
 
 public class Player extends CircleGameObject {
     private final Joystick joystick;
     private float currHealthPoints;
     private HealthBar healthBar;
+    private Sprite sprite;
 
-    public Player(Context context, double playerPositionX, double playerPositionY, double playerRadius, Joystick joystick) {
-        super(playerPositionX, playerPositionY, playerRadius, ContextCompat.getColor(context, R.color.blue));
+    public Player(Context context, double playerPositionX, double playerPositionY, double playerHitRadius, Joystick joystick, Sprite sprite) {
+        super(playerPositionX, playerPositionY, playerHitRadius, ContextCompat.getColor(context, R.color.blue));
 
         this.joystick = joystick;
         this.healthBar = new HealthBar(context, this);
         restartCurrHealthPoints();
+        this.sprite = sprite;
     }
 
     @Override
@@ -55,7 +59,13 @@ public class Player extends CircleGameObject {
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        super.draw(canvas, gameDisplay);
+        // Draw player picture in the center
+        this.sprite.draw(
+                canvas,
+                (int) gameDisplay.gameDisplayCoordinateX(this.positionX) - this.sprite.width()/2,
+                (int) gameDisplay.gameDisplayCoordinateY(this.positionY) - this.sprite.height()/2,
+                PLAYER_SPRITE_RADIUS
+        );
         this.healthBar.draw(canvas, gameDisplay);
     }
 

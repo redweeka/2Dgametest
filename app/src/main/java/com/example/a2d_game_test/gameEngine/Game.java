@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import com.example.a2d_game_test.models.gameObjects.*;
 import com.example.a2d_game_test.models.gamePanels.*;
+import com.example.a2d_game_test.models.graphics.SpriteSheet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
+    private final SpriteSheet spriteSheet;
     private GameLoop gameLoop;
     private final Player player;
     private final Joystick joystick;
@@ -39,6 +41,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         createNewGameLoop(surfaceHolder);
 
+        // Initialize graphics
+        this.spriteSheet = new SpriteSheet(context);
+
         // Initialize all non-interactive game objects (such as panels)
         this.gameOverPanel = new GameOverPanel(context);
         this.joystick = new Joystick(
@@ -56,7 +61,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 START_PLAYER_POSITION_X,
                 START_PLAYER_POSITION_Y,
                 PLAYER_RADIUS,
-                this.joystick
+                this.joystick,
+                this.spriteSheet.getPlayerSprite()
         );
 
         // Get screen sizes for game display

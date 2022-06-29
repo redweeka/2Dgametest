@@ -1,5 +1,8 @@
 package com.example.a2d_game_test.utilities;
 
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_X;
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_Y;
+
 public class Constants {
     public static class GameLoopConstants {
         public static final int SECOND_IN_MILLISECOND = 1000;
@@ -11,6 +14,7 @@ public class Constants {
         public static final int START_PLAYER_POSITION_Y = 466;
         public static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
         public static final int PLAYER_RADIUS = 36;
+        public static final int PLAYER_SPRITE_RADIUS = PLAYER_RADIUS*2;
         public static final int PLAYER_MAX_HEALTH_POINTS = 10;
     }
 
@@ -63,7 +67,7 @@ public class Constants {
     public static class GameOverConstants {
         public static final String GAME_OVER_TEXT = "Game Over Champ!";
         public static final float GAME_OVER_TEXT_SIZE = 150;
-        public static final float GAME_OVER_POSITION_X = 800;
-        public static final float GAME_OVER_POSITION_Y = 200;
+        public static final float GAME_OVER_POSITION_X = START_PLAYER_POSITION_X - 446;
+        public static final float GAME_OVER_POSITION_Y = START_PLAYER_POSITION_Y + 46;
     }
 }
