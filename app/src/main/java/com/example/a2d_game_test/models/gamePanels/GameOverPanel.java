@@ -22,10 +22,6 @@ public class GameOverPanel {
     }
 
     public void draw(Canvas canvas) {
-        float gameOverMiddlePositionX = START_PLAYER_POSITION_X - 446;
-        float gameOverMiddlePositionY = START_PLAYER_POSITION_Y + 46;
-
-        canvas.drawText(GAME_OVER_TEXT, gameOverMiddlePositionX, gameOverMiddlePositionY, this.gameOverPaint);
-//        canvas.drawText(GAME_OVER_TEXT, GAME_OVER_POSITION_X, GAME_OVER_POSITION_Y, this.gameOverPaint);
+        canvas.drawText(GAME_OVER_TEXT, GAME_OVER_POSITION_X, GAME_OVER_POSITION_Y, this.gameOverPaint);
     }
 }
