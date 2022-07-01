@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Game will render things to main activity
+        // Class game will render things to main activity
         this.game = new Game(this);
         setContentView(this.game);
     }

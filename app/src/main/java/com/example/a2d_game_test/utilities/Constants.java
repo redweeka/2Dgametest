@@ -71,4 +71,9 @@ public class Constants {
         public static final float GAME_OVER_POSITION_X = START_PLAYER_POSITION_X - 446;
         public static final float GAME_OVER_POSITION_Y = START_PLAYER_POSITION_Y + 46;
     }
+    public static class Graphics {
+        // Update it if there is more animations to player in the sprite sheet
+        public static final int PLAYER_SPRITES_AMOUNT = 3;
+        public static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 16;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.a2d_game_test.models.graphics;
 
+import static com.example.a2d_game_test.utilities.Constants.Graphics.PLAYER_SPRITES_AMOUNT;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_SPRITE_RADIUS;
 
 import android.content.Context;
@@ -19,8 +20,25 @@ public class SpriteSheet {
         this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sprite_sheet, bitmapOptions);
     }
 
-    public Sprite getPlayerSprite() {
-        return new Sprite(this, new Rect(0,0, PLAYER_SPRITE_RADIUS, PLAYER_SPRITE_RADIUS));
+    public Sprite[] getPlayerSprites() {
+        Sprite[] playerSprites = new Sprite[PLAYER_SPRITES_AMOUNT];
+
+        // Get player picture size sprites in first row of the sprite sheet
+        for (int playerSpritesIndex = 0; playerSpritesIndex < playerSprites.length; playerSpritesIndex++) {
+            int currLeftSpritePosition = playerSpritesIndex * PLAYER_SPRITE_RADIUS;
+
+            playerSprites[playerSpritesIndex] = new Sprite(
+                    this,
+                    new Rect(
+                            currLeftSpritePosition,
+                            0,
+                            currLeftSpritePosition + PLAYER_SPRITE_RADIUS,
+                            PLAYER_SPRITE_RADIUS
+                    )
+            );
+        }
+
+        return playerSprites;
     }
 
     public Bitmap getBitmap() {
