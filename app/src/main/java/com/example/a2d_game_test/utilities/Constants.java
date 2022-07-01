@@ -1,5 +1,6 @@
 package com.example.a2d_game_test.utilities;
 
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_Y;
 
@@ -57,7 +58,7 @@ public class Constants {
     }
 
     public static class HealthBarConstants {
-        public static final int HEALTH_BAR_DISTANCE_FROM_PLAYER = 36;
+        public static final int HEALTH_BAR_DISTANCE_FROM_PLAYER_CENTER = PLAYER_RADIUS + 10;
         public static final int HEALTH_BAR_FRAME_WIDTH = 96;
         public static final int HEALTH_BAR_FRAME_HEIGHT = 26;
         public static final int HEALTH_BAR_PADDING = 6;
