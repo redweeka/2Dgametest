@@ -1,5 +1,6 @@
 package com.example.a2d_game_test.utilities;
 
+import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_RADIUS;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_Y;
 
@@ -57,7 +58,7 @@ public class Constants {
     }
 
     public static class HealthBarConstants {
-        public static final int HEALTH_BAR_DISTANCE_FROM_PLAYER = 36;
+        public static final int HEALTH_BAR_DISTANCE_FROM_PLAYER_CENTER = PLAYER_RADIUS + 10;
         public static final int HEALTH_BAR_FRAME_WIDTH = 96;
         public static final int HEALTH_BAR_FRAME_HEIGHT = 26;
         public static final int HEALTH_BAR_PADDING = 6;
@@ -69,5 +70,10 @@ public class Constants {
         public static final float GAME_OVER_TEXT_SIZE = 150;
         public static final float GAME_OVER_POSITION_X = START_PLAYER_POSITION_X - 446;
         public static final float GAME_OVER_POSITION_Y = START_PLAYER_POSITION_Y + 46;
+    }
+    public static class Graphics {
+        // Update it if there is more animations to player in the sprite sheet
+        public static final int PLAYER_SPRITES_AMOUNT = 3;
+        public static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 16;
     }
 }

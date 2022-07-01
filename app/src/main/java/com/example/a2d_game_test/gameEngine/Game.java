@@ -12,8 +12,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+
 import com.example.a2d_game_test.models.gameObjects.*;
 import com.example.a2d_game_test.models.gamePanels.*;
+import com.example.a2d_game_test.models.graphics.PlayerAnimator;
 import com.example.a2d_game_test.models.graphics.SpriteSheet;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Initialize graphics
         this.spriteSheet = new SpriteSheet(context);
+        PlayerAnimator playerAnimator = new PlayerAnimator(this.spriteSheet.getPlayerSprites());
 
         // Initialize all non-interactive game objects (such as panels)
         this.gameOverPanel = new GameOverPanel(context);
@@ -62,7 +65,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 START_PLAYER_POSITION_Y,
                 PLAYER_RADIUS,
                 this.joystick,
-                this.spriteSheet.getPlayerSprite()
+                playerAnimator
         );
 
         // Get screen sizes for game display
@@ -140,10 +143,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {}
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+    }
 
     @Override
-    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {}
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+    }
 
     public void pause() {
         this.gameLoop.stopLoop();

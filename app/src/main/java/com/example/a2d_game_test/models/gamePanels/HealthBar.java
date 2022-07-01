@@ -29,11 +29,13 @@ public class HealthBar {
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         float playerPositionX = (float) this.player.positionX();
         float playerPositionY = (float) this.player.positionY();
-        float distanceToPlayer = HEALTH_BAR_DISTANCE_FROM_PLAYER;
+        float distanceToPlayer = HEALTH_BAR_DISTANCE_FROM_PLAYER_CENTER;
+
         // Calculate life in percentage to show graphic health bar
         float healthPointPercentage = this.player.currHealthPoints() / PLAYER_MAX_HEALTH_POINTS;
 
-        // Calculate exact health bar frame properties
+        //// Calculate exact health bar frame properties ////
+
         float healthBarFrameLeftPosition = playerPositionX - HEALTH_BAR_FRAME_WIDTH / 2;
         float healthBarFrameRightPosition = playerPositionX + HEALTH_BAR_FRAME_WIDTH / 2;
         float healthBarFrameBottomPosition = playerPositionY - distanceToPlayer;
@@ -48,16 +50,15 @@ public class HealthBar {
                 this.healthBarFramePaint
         );
 
-        // Calculate exact health bar properties
-
-
         // Draw the health on the health bar background
         float healthBarLeftPosition = healthBarFrameLeftPosition + HEALTH_BAR_PADDING;
-        // Dynamic to actually show the amount of life
+
+        // Amount of life
         float healthBarRightPosition = healthBarLeftPosition + HEALTH_BAR_WIDTH * healthPointPercentage;
         float healthBarBottomPosition = healthBarFrameBottomPosition - HEALTH_BAR_PADDING;
         float healthBarTopPosition = healthBarFrameTopPosition + HEALTH_BAR_PADDING;
 
+        // Draw the health inside health bar frame
         canvas.drawRect(
                 (float) gameDisplay.gameDisplayCoordinateX(healthBarLeftPosition),
                 (float) gameDisplay.gameDisplayCoordinateY(healthBarTopPosition),
