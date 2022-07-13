@@ -1,7 +1,8 @@
 package com.example.a2d_game_test.models.graphics;
 
-import static com.example.a2d_game_test.utilities.Constants.Graphics.PLAYER_SPRITES_AMOUNT;
-import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_SPRITE_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.PLAYER_SPRITES_AMOUNT;
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.SPRITE_PIXELS_HEIGHT;
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.SPRITE_PIXELS_WIDTH;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,20 +26,34 @@ public class SpriteSheet {
 
         // Get player picture size sprites in first row of the sprite sheet
         for (int playerSpritesIndex = 0; playerSpritesIndex < playerSprites.length; playerSpritesIndex++) {
-            int currLeftSpritePosition = playerSpritesIndex * PLAYER_SPRITE_RADIUS;
-
-            playerSprites[playerSpritesIndex] = new Sprite(
-                    this,
-                    new Rect(
-                            currLeftSpritePosition,
-                            0,
-                            currLeftSpritePosition + PLAYER_SPRITE_RADIUS,
-                            PLAYER_SPRITE_RADIUS
-                    )
-            );
+            playerSprites[playerSpritesIndex] = getSpriteByIndex(0, playerSpritesIndex);
         }
 
         return playerSprites;
+    }
+
+    public Sprite getWaterSprite() {
+        return getSpriteByIndex(1, 0);
+    }
+
+    public Sprite getGreenGroundSprite() {
+        return getSpriteByIndex(1, 1);
+    }
+
+    public Sprite getGrassSprite(int grassType) {
+        return getSpriteByIndex(1, 2 + grassType);
+    }
+
+    private Sprite getSpriteByIndex(int rowIndex, int columnIndex) {
+        return new Sprite(
+                this,
+                new Rect(
+                        columnIndex * SPRITE_PIXELS_WIDTH,
+                        rowIndex * SPRITE_PIXELS_HEIGHT,
+                        (columnIndex + 1) * SPRITE_PIXELS_WIDTH,
+                        (rowIndex + 1) * SPRITE_PIXELS_HEIGHT
+                )
+        );
     }
 
     public Bitmap getBitmap() {
