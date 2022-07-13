@@ -75,9 +75,11 @@ public class Constants {
 
     public static class GraphicsConstants {
         // Update it if there is more animations to player in the sprite sheet
+        public static final int PLAYER_SPRITES_AMOUNT = 3;
         public static final int SPRITE_PIXELS_WIDTH = 72;
         public static final int SPRITE_PIXELS_HEIGHT = SPRITE_PIXELS_WIDTH;
-        public static final int PLAYER_SPRITES_AMOUNT = 3;
+
+        // Make player animation movement fast or slow
         public static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 16;
     }
 

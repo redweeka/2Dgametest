@@ -26,8 +26,7 @@ public class SpriteSheet {
 
         // Get player picture size sprites in first row of the sprite sheet
         for (int playerSpritesIndex = 0; playerSpritesIndex < playerSprites.length; playerSpritesIndex++) {
-            int currLeftSpritePosition = playerSpritesIndex * SPRITE_PIXELS_WIDTH;
-            playerSprites[playerSpritesIndex] = getSpriteByIndex(0, currLeftSpritePosition);
+            playerSprites[playerSpritesIndex] = getSpriteByIndex(0, playerSpritesIndex);
         }
 
         return playerSprites;
