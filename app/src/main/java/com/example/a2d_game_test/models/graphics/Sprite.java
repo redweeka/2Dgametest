@@ -1,5 +1,7 @@
 package com.example.a2d_game_test.models.graphics;
 
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.SPRITE_PIXELS_WIDTH;
+
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
@@ -13,11 +15,11 @@ public class Sprite {
         this.rect = rect;
     }
 
-    public void draw(Canvas canvas, int positionX, int positionY, int size) {
+    public void draw(Canvas canvas, int positionX, int positionY) {
         canvas.drawBitmap(
                 this.spriteSheet.getBitmap(),
                 this.rect,
-                new Rect(positionX, positionY, positionX + size, positionY + size),
+                new Rect(positionX, positionY, positionX + SPRITE_PIXELS_WIDTH, positionY + SPRITE_PIXELS_WIDTH),
                 null
         );
     }

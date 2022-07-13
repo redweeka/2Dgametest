@@ -1,7 +1,7 @@
 package com.example.a2d_game_test.models.graphics;
 
-import static com.example.a2d_game_test.utilities.Constants.Graphics.MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAYER_SPRITE_RADIUS;
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
+import static com.example.a2d_game_test.utilities.Constants.GraphicsConstants.SPRITE_PIXELS_WIDTH;
 
 import android.graphics.Canvas;
 
@@ -10,15 +10,15 @@ import com.example.a2d_game_test.models.gameObjects.Player;
 
 public class PlayerAnimator {
 
-    private Sprite[] playerSprites;
+    private final Sprite[] playerSprites;
     private int notMovingIndex = 0;
 
-    // Init at 1 and later will toggle between 1 and 2
+    // Start at 1 and later will toggle between 1 and 2
     private int movingIndex = 1;
     private int updatesBeforeNextMoveFrame;
 
-    public PlayerAnimator(Sprite[] sprites) {
-        this.playerSprites = sprites;
+    public PlayerAnimator(Sprite[] playerSprites) {
+        this.playerSprites = playerSprites;
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay, Player player) {
@@ -57,8 +57,7 @@ public class PlayerAnimator {
         sprite.draw(
                 canvas,
                 (int) gameDisplay.gameDisplayCoordinateX(player.positionX()) - sprite.width()/2,
-                (int) gameDisplay.gameDisplayCoordinateY(player.positionY()) - sprite.height()/2,
-                PLAYER_SPRITE_RADIUS
+                (int) gameDisplay.gameDisplayCoordinateY(player.positionY()) - sprite.height()/2
         );
     }
 }

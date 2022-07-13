@@ -4,6 +4,8 @@ import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.PLAY
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_X;
 import static com.example.a2d_game_test.utilities.Constants.PlayerConstants.START_PLAYER_POSITION_Y;
 
+import android.graphics.Rect;
+
 public class Constants {
     public static class GameLoopConstants {
         public static final int SECOND_IN_MILLISECOND = 1000;
@@ -15,7 +17,6 @@ public class Constants {
         public static final int START_PLAYER_POSITION_Y = 466;
         public static final int START_PLAYER_POSITION_X = START_PLAYER_POSITION_Y * 2;
         public static final int PLAYER_RADIUS = 36;
-        public static final int PLAYER_SPRITE_RADIUS = PLAYER_RADIUS*2;
         public static final int PLAYER_MAX_HEALTH_POINTS = 10;
     }
 
@@ -71,9 +72,19 @@ public class Constants {
         public static final float GAME_OVER_POSITION_X = START_PLAYER_POSITION_X - 446;
         public static final float GAME_OVER_POSITION_Y = START_PLAYER_POSITION_Y + 46;
     }
-    public static class Graphics {
+
+    public static class GraphicsConstants {
         // Update it if there is more animations to player in the sprite sheet
+        public static final int SPRITE_PIXELS_WIDTH = 72;
+        public static final int SPRITE_PIXELS_HEIGHT = SPRITE_PIXELS_WIDTH;
         public static final int PLAYER_SPRITES_AMOUNT = 3;
         public static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 16;
+    }
+
+    public static class TiledMapConstants {
+        public static final int TILE_PIXELS_WIDTH = 72;
+        public static final int TILE_PIXELS_HEIGHT = TILE_PIXELS_WIDTH;
+        public static final int ROW_TILES_AMOUNT = 126;
+        public static final int COLUMN_TILES_AMOUNT = ROW_TILES_AMOUNT;
     }
 }

@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.example.a2d_game_test.map.TiledMap;
 import com.example.a2d_game_test.models.gameObjects.*;
 import com.example.a2d_game_test.models.gamePanels.*;
 import com.example.a2d_game_test.models.graphics.PlayerAnimator;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final SpriteSheet spriteSheet;
+    private final TiledMap tiledMap;
     private GameLoop gameLoop;
     private final Player player;
     private final Joystick joystick;
@@ -74,6 +76,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Initialize game display and center it around the player
         this.gameDisplay = new GameDisplay(this.player, displayMetrics.widthPixels, displayMetrics.heightPixels);
+
+        // Initialize map
+        this.tiledMap = new TiledMap(this.spriteSheet);
 
         // Everybody doing it
         setFocusable(true);
@@ -157,6 +162,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        // Draw map
+        this.tiledMap.draw(canvas, this.gameDisplay);
 
         // Draw game objects
         this.player.draw(canvas, this.gameDisplay);

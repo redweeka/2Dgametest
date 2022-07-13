@@ -19,7 +19,7 @@ public class Player extends CircleGameObject {
     private final Joystick joystick;
     private float currHealthPoints;
     private HealthBar healthBar;
-    private PlayerAnimator spriteAnimator;
+    private PlayerAnimator playerAnimator;
     private PlayerState playerState;
 
     public Player(Context context, double playerPositionX, double playerPositionY, double playerHitRadius, Joystick joystick, PlayerAnimator spriteAnimator) {
@@ -28,7 +28,7 @@ public class Player extends CircleGameObject {
         this.joystick = joystick;
         this.healthBar = new HealthBar(context, this);
         restartCurrHealthPoints();
-        this.spriteAnimator = spriteAnimator;
+        this.playerAnimator = spriteAnimator;
         this.playerState = new PlayerState(this);
     }
 
@@ -61,7 +61,7 @@ public class Player extends CircleGameObject {
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        this.spriteAnimator.draw(canvas, gameDisplay, this);
+        this.playerAnimator.draw(canvas, gameDisplay, this);
         this.healthBar.draw(canvas, gameDisplay);
     }
 
